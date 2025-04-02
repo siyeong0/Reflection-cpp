@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Reflection-cpp\Factory.h" />
+    <ClInclude Include="Reflection-cpp\FixedString.hpp" />
     <ClInclude Include="Reflection-cpp\Macro.h" />
     <ClInclude Include="Reflection-cpp\Property.hpp" />
     <ClInclude Include="Reflection-cpp\PropertyHandler.hpp" />
