@@ -1,6 +1,6 @@
 #pragma once
-#include "../TypeInfo/MAKE_TYPE_INFO.h"
-#include "../TypeInfo/TypeInfo.hpp"
+#include "Macro.h"
+#include "TypeInfo.hpp"
 
 class PropertyHandlerBase
 {
@@ -35,10 +35,34 @@ public:
 	}
 
 	explicit PropertyHandler(MemberPtrType ptr)
-		: mPtr(ptr) 
+		: mPtr(ptr)
 	{
 	}
 
 private:
 	MemberPtrType mPtr;
+};
+
+template <typename TClass, typename T>
+class StaticPropertyHandler : public IPropertyHandler<T>
+{
+	MAKE_TYPE_INFO(StaticPropertyHandler);
+public:
+	virtual T& Get(void* object) const override
+	{
+		return *mPtr;
+	}
+
+	virtual void Set(void* object, const T& value) const override
+	{
+		*mPtr = value;
+	}
+
+	explicit StaticPropertyHandler(T* ptr)
+		: mPtr(ptr)
+	{
+	}
+
+private:
+	T* mPtr;
 };

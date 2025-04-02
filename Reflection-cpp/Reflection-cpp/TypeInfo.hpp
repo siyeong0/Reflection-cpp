@@ -6,13 +6,8 @@
 
 // forward declaration
 template <typename T> struct TypeInfoInitializer;
-
 class Property;
 
-class TypeInfo;
-
-template <typename T>
-static TypeInfo& getStaticTypeInfo();
 
 class TypeInfo
 {
@@ -28,7 +23,7 @@ public:
 	}
 
 	template <typename T>
-	static TypeInfo& GetStaticTypeInfo()
+	static TypeInfo& GetTypeInfo()
 	{
 		if constexpr (std::is_fundamental_v<T>)
 		{
@@ -37,7 +32,8 @@ public:
 		}
 		else
 		{
-			return T::StaticTypeInfo();
+			static TypeInfo typeInfo(TypeInfoInitializer<T>{typeid(T).name()});
+			return typeInfo;
 		}
 	}
 
@@ -71,13 +67,13 @@ public:
 	template <typename T>
 	bool IsSame() const
 	{
-		return IsSame(T::StaticTypeInfo());
+		return IsSame(GetTypeInfo<T>());
 	}
 
 	template <typename T>
 	bool IsChildOf() const
 	{
-		return IsChildOf(T::StaticTypeInfo());
+		return IsChildOf(GetTypeInfo<T>());
 	}
 
 	size_t GetHash() const { return mTypeHash; }
@@ -93,14 +89,17 @@ public:
 	const Property* GetProperty(const char* name) const
 	{
 		auto prop = mPropertyMap.find(name);
-		if (prop != mPropertyMap.end())
+		for (auto typeInfo = this; typeInfo != nullptr; typeInfo = typeInfo->mSuper)
 		{
-			return mPropertyMap.at(name);
+			auto& propertyMap = typeInfo->mPropertyMap;
+			auto iter = propertyMap.find(name);
+			if (iter != propertyMap.end())
+			{
+				return propertyMap.at(name);
+			}
 		}
-		else
-		{
-			return nullptr;
-		}
+
+		return nullptr;
 	}
 
 private:

@@ -19,7 +19,7 @@ struct TypeInfoInitializer
 	{
 		if constexpr (HasSuper<T>)
 		{
-			Super = &(typename T::Super::StaticTypeInfo());
+			Super = &(typename TypeInfo::GetTypeInfo<T::Super>());
 		}
 	}
 };

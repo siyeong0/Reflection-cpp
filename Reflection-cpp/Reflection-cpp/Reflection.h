@@ -1,14 +1,23 @@
 #pragma once
-#include "TypeInfo/MAKE_TYPE_INFO.h"
-#include "TypeInfo/DynamicCast.hpp"
-#include "TypeInfo/SuperClassDeduction.hpp"
-#include "TypeInfo/TypeInfo.hpp"
-#include "TypeInfo/TypeInfoInitializer.hpp"
+#include "Factory.h"
 
-#include "Factory/Factory.h"
+#include "SuperClassDeduction.hpp"
+#include "TypeInfo.hpp"
+#include "TypeInfoInitializer.hpp"
 
-#include "Member/MEMBER.h"
-#include "Member/Property.hpp"
-#include "Member/PropertyHandler.hpp"
-#include "Member/PropertyInitializer.hpp"
-#include "Member/PropertyRegister.hpp"
+#include "Property.hpp"
+#include "PropertyHandler.hpp"
+#include "PropertyInitializer.hpp"
+#include "PropertyRegister.hpp"
+
+#include "Macro.h"
+
+// custom dynamic_cast
+template <typename PtrTo, typename PtrFrom>
+PtrTo DynamicCast(PtrFrom ptr)
+{
+	static_assert(std::is_pointer<PtrTo>::value);
+	static_assert(std::is_pointer<PtrFrom>::value);
+	using ToValueType = std::remove_pointer<PtrTo>::type;
+	return ptr && ptr->GetTypeInfo().IsChildOf<ToValueType>() ? reinterpret_cast<PtrTo>(ptr) : nullptr;
+}

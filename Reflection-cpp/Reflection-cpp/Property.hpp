@@ -1,6 +1,6 @@
 #pragma once
 #include <cassert>
-#include "../TypeInfo/TypeInfo.hpp"
+#include "TypeInfo.hpp"
 #include "PropertyHandler.hpp"
 #include "PropertyInitializer.hpp"
 
@@ -18,6 +18,7 @@ public:
 		else
 		{
 			assert(false && "Invalid casting");
+			return *reinterpret_cast<T*>(nullptr);
 		}
 	}
 

@@ -18,42 +18,48 @@
     <ClCompile Include="main.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Sample\DynamicCastSample.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\FactorySample.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Sample\MemberReflectionSample.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Reflection-cpp\TypeInfo\TypeInfo.hpp">
+    <ClInclude Include="Reflection-cpp\TypeInfo.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Reflection-cpp\Reflection.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\TypeInfo\TypeInfoInitializer.hpp">
+    <ClInclude Include="Reflection-cpp\TypeInfoInitializer.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\TypeInfo\SuperClassDeduction.hpp">
+    <ClInclude Include="Reflection-cpp\SuperClassDeduction.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\TypeInfo\DynamicCast.hpp">
+    <ClInclude Include="Reflection-cpp\Factory.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\Factory\Factory.h">
+    <ClInclude Include="Reflection-cpp\Property.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\Member\Property.hpp">
+    <ClInclude Include="Reflection-cpp\PropertyHandler.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\Member\PropertyHandler.hpp">
+    <ClInclude Include="Reflection-cpp\PropertyRegister.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\Member\PropertyRegister.hpp">
+    <ClInclude Include="Reflection-cpp\PropertyInitializer.hpp">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\Member\PropertyInitializer.hpp">
+    <ClInclude Include="Reflection-cpp\Macro.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Reflection-cpp\Member\MEMBER.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Reflection-cpp\TypeInfo\MAKE_TYPE_INFO.h">
+    <ClInclude Include="Sample\Sample.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

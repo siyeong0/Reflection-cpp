@@ -2,7 +2,7 @@
 #include <memory>
 #include <unordered_map>
 
-#define FACTORY(BASECLASS)	\
+#define BUILD_FACTORY(BASECLASS)	\
 class BASECLASS ## Factory	\
 {	\
 public:	\
