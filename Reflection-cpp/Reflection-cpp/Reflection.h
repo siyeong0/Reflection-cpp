@@ -1,6 +1,4 @@
 #pragma once
-#include "FixedString.hpp"
-
 #include "Factory.h"
 
 #include "SuperClassDeduction.hpp"
