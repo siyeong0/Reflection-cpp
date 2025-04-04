@@ -14,7 +14,7 @@ public:	\
 	using Super = typename refl::SuperClassTypeDeduction<CLASS>::Type;	\
 	using ThisType = CLASS;	\
 public:	\
-	virtual const refl::TypeInfo& GetTypeInfo() const { return refl::TypeInfo::GetTypeInfo<ThisType>(); }	\
+	virtual const refl::TypeInfo& GetTypeInfo() const { return refl::GetStaticTypeInfo<ThisType>(); }	\
 private:	
 // ptr->GetTypeInfo()로 타입 정보를 얻어올 수 있음
 
@@ -27,6 +27,6 @@ inline static struct _registProperty##NAME	\
 	{	\
 		static refl::PropertyRegister	\
 			<ThisType, decltype(NAME), decltype(&ThisType::NAME), &ThisType::NAME>	\
-			propertyRegister##NAME(#NAME, refl::TypeInfo::GetTypeInfo<ThisType>());	\
+			propertyRegister##NAME(#NAME, refl::GetStaticTypeInfo<ThisType>());	\
 	}	\
 } regist##NAME;	

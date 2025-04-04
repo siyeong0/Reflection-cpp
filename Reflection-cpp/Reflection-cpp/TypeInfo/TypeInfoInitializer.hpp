@@ -21,7 +21,7 @@ namespace refl
 		{
 			if constexpr (HasSuper<T>)
 			{
-				Super = &(TypeInfo::GetTypeInfo<T::Super>());
+				Super = &(GetStaticTypeInfo<T::Super>());
 			}
 		}
 	};

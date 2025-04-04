@@ -17,7 +17,7 @@ namespace refl
 				static PropertyHandler<TClass, T> handler(ptr);
 				static PropertyInitializer initializer = {
 					.Name = name,
-					.Type = TypeInfo::GetTypeInfo<T>(),
+					.Type = GetStaticTypeInfo<T>(),
 					.Handler = handler
 				};
 				static Property property(typeInfo, initializer);
@@ -28,7 +28,7 @@ namespace refl
 				static StaticPropertyHandler<TClass, T> handler(ptr);
 				static PropertyInitializer initializer = {
 					.Name = name,
-					.Type = TypeInfo::GetTypeInfo<T>(),
+					.Type = GetStaticTypeInfo<T>(),
 					.Handler = handler
 				};
 				static Property property(typeInfo, initializer);

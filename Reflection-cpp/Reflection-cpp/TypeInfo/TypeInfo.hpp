@@ -9,7 +9,10 @@ namespace refl
 	// forward declaration
 	template <typename T> struct TypeInfoInitializer;
 	class Property;
+	class TypeInfo;
 
+	template <typename T>
+	TypeInfo& GetStaticTypeInfo();
 
 	class TypeInfo
 	{
@@ -22,21 +25,6 @@ namespace refl
 			, mSuper(initializer.Super)
 		{
 
-		}
-
-		template <typename T>
-		static TypeInfo& GetTypeInfo()
-		{
-			if constexpr (std::is_fundamental_v<T>)
-			{
-				static TypeInfo typeInfo(TypeInfoInitializer<T>{typeid(T).name()});
-				return typeInfo;
-			}
-			else
-			{
-				static TypeInfo typeInfo(TypeInfoInitializer<T>{typeid(T).name()});
-				return typeInfo;
-			}
 		}
 
 		bool IsSame(const TypeInfo& other) const
@@ -69,13 +57,13 @@ namespace refl
 		template <typename T>
 		bool IsSame() const
 		{
-			return IsSame(GetTypeInfo<T>());
+			return IsSame(GetStaticTypeInfo<T>());
 		}
 
 		template <typename T>
 		bool IsChildOf() const
 		{
-			return IsChildOf(GetTypeInfo<T>());
+			return IsChildOf(GetStaticTypeInfo<T>());
 		}
 
 		size_t GetHash() const { return mTypeHash; }
@@ -104,6 +92,11 @@ namespace refl
 			return nullptr;
 		}
 
+		const std::map<std::string, const Property*>& GetPropertyMap() const
+		{
+			return mPropertyMap;
+		}
+
 	private:
 		size_t mTypeHash;
 		const char* mName;
@@ -112,4 +105,11 @@ namespace refl
 
 		std::map<std::string, const Property*> mPropertyMap;
 	};
+
+	template <typename T>
+	TypeInfo& GetStaticTypeInfo()
+	{
+		static TypeInfo typeInfo(TypeInfoInitializer<T>{typeid(T).name()});
+		return typeInfo;
+	}
 }
