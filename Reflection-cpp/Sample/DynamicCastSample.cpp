@@ -19,10 +19,20 @@ class B : public A
 	MAKE_DYNAMIC_TYPE_INFO(B);
 };
 
-class C : public B
+class C
 {
+public:
+	virtual ~C() = default;
+
 	MAKE_DYNAMIC_TYPE_INFO(C);
 };
+
+class D : public C
+{
+	MAKE_DYNAMIC_TYPE_INFO(D);
+};
+
+
 
 
 void DynamicCastSample()
@@ -38,7 +48,7 @@ void DynamicCastSample()
 		}
 		else
 		{
-			test[i] = new C;
+			test[i] = new D;
 		}
 	}
 
@@ -68,7 +78,7 @@ void DynamicCastSample()
 	int count2 = 0;
 	for (int i = 0; i < TEST_N; ++i)
 	{
-		if (B* b = DynamicCast<B*>(reinterpret_cast<A*>(test[i])))
+		if (B* b = refl::DynamicCast<B*>(reinterpret_cast<A*>(test[i])))
 		{
 			++count2;
 		}

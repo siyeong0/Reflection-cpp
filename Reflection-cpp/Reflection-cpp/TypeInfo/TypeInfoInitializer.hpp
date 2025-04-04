@@ -1,25 +1,28 @@
 #pragma once
 #include <concepts>
 
-// forward declaration
-class TypeInfo;
-
-template <typename T> // (T::Super가 존재) and (T::Super가 void타입이 아님)
-concept HasSuper = requires { typename T::Super; } && !std::same_as<typename T::Super, void>;
-
-template <typename T>
-struct TypeInfoInitializer
+namespace refl
 {
-	const char* Name;
-	const TypeInfo* Super;
+	// forward declaration
+	class TypeInfo;
 
-	TypeInfoInitializer(const char* name)
-		: Name(name)
-		, Super(nullptr)
+	template <typename T> // (T::Super가 존재) and (T::Super가 void타입이 아님)
+	concept HasSuper = requires { typename T::Super; } && !std::same_as<typename T::Super, void>;
+
+	template <typename T>
+	struct TypeInfoInitializer
 	{
-		if constexpr (HasSuper<T>)
+		const char* Name;
+		const TypeInfo* Super;
+
+		TypeInfoInitializer(const char* name)
+			: Name(name)
+			, Super(nullptr)
 		{
-			Super = &(typename TypeInfo::GetTypeInfo<T::Super>());
+			if constexpr (HasSuper<T>)
+			{
+				Super = &(TypeInfo::GetTypeInfo<T::Super>());
+			}
 		}
-	}
-};
+	};
+}

@@ -2,67 +2,70 @@
 #include "../Macro.h"
 #include "../TypeInfo/TypeInfo.hpp"
 
-class PropertyHandlerBase
+namespace refl
 {
-	MAKE_DYNAMIC_TYPE_INFO(PropertyHandlerBase);
-public:
-	virtual ~PropertyHandlerBase() = default;
-};
-
-template <typename T>
-class IPropertyHandler : public PropertyHandlerBase
-{
-	MAKE_DYNAMIC_TYPE_INFO(IPropertyHandler);
-public:
-	virtual T& Get(void* object) const = 0;
-	virtual void Set(void* object, const T& value) const = 0;
-};
-
-template <typename TClass, typename T>
-class PropertyHandler : public IPropertyHandler<T>
-{
-	MAKE_DYNAMIC_TYPE_INFO(PropertyHandler);
-	using MemberPtrType = T TClass::*;
-public:
-	virtual T& Get(void* object) const override
+	class PropertyHandlerBase
 	{
-		return static_cast<TClass*>(object)->*mPtr;
-	}
+		MAKE_DYNAMIC_TYPE_INFO(PropertyHandlerBase);
+	public:
+		virtual ~PropertyHandlerBase() = default;
+	};
 
-	virtual void Set(void* object, const T& value) const override
+	template <typename T>
+	class IPropertyHandler : public PropertyHandlerBase
 	{
-		static_cast<TClass*>(object)->*mPtr = value;
-	}
+		MAKE_DYNAMIC_TYPE_INFO(IPropertyHandler);
+	public:
+		virtual T& Get(void* object) const = 0;
+		virtual void Set(void* object, const T& value) const = 0;
+	};
 
-	explicit PropertyHandler(MemberPtrType ptr)
-		: mPtr(ptr)
+	template <typename TClass, typename T>
+	class PropertyHandler : public IPropertyHandler<T>
 	{
-	}
+		MAKE_DYNAMIC_TYPE_INFO(PropertyHandler);
+		using MemberPtrType = T TClass::*;
+	public:
+		virtual T& Get(void* object) const override
+		{
+			return static_cast<TClass*>(object)->*mPtr;
+		}
 
-private:
-	MemberPtrType mPtr;
-};
+		virtual void Set(void* object, const T& value) const override
+		{
+			static_cast<TClass*>(object)->*mPtr = value;
+		}
 
-template <typename TClass, typename T>
-class StaticPropertyHandler : public IPropertyHandler<T>
-{
-	MAKE_DYNAMIC_TYPE_INFO(StaticPropertyHandler);
-public:
-	virtual T& Get(void* object) const override
+		explicit PropertyHandler(MemberPtrType ptr)
+			: mPtr(ptr)
+		{
+		}
+
+	private:
+		MemberPtrType mPtr;
+	};
+
+	template <typename TClass, typename T>
+	class StaticPropertyHandler : public IPropertyHandler<T>
 	{
-		return *mPtr;
-	}
+		MAKE_DYNAMIC_TYPE_INFO(StaticPropertyHandler);
+	public:
+		virtual T& Get(void* object) const override
+		{
+			return *mPtr;
+		}
 
-	virtual void Set(void* object, const T& value) const override
-	{
-		*mPtr = value;
-	}
+		virtual void Set(void* object, const T& value) const override
+		{
+			*mPtr = value;
+		}
 
-	explicit StaticPropertyHandler(T* ptr)
-		: mPtr(ptr)
-	{
-	}
+		explicit StaticPropertyHandler(T* ptr)
+			: mPtr(ptr)
+		{
+		}
 
-private:
-	T* mPtr;
-};
+	private:
+		T* mPtr;
+	};
+}

@@ -1,9 +1,12 @@
 #pragma once
 #include "PropertyHandler.hpp"
 
-struct PropertyInitializer
+namespace refl
 {
-	const char* Name;
-	TypeInfo& Type;
-	PropertyHandlerBase& Handler;
-};
+	struct PropertyInitializer
+	{
+		const char* Name;
+		TypeInfo& Type;
+		PropertyHandlerBase& Handler;
+	};
+}

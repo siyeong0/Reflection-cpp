@@ -4,33 +4,35 @@
 #include "Property.hpp"
 #include "PropertyInitializer.hpp"
 
-
-template <typename TClass, typename T, typename TPtr, TPtr ptr>
-class PropertyRegister
+namespace refl
 {
-public:
-	PropertyRegister(const char* name, TypeInfo& typeInfo)
+	template <typename TClass, typename T, typename TPtr, TPtr ptr>
+	class PropertyRegister
 	{
-		if constexpr (std::is_member_pointer_v<TPtr>)
+	public:
+		PropertyRegister(const char* name, TypeInfo& typeInfo)
 		{
-			static PropertyHandler<TClass, T> handler(ptr);
-			static PropertyInitializer initializer = {
-				.Name = name,
-				.Type = TypeInfo::GetTypeInfo<T>(),
-				.Handler = handler
-			};
-			static Property property(typeInfo, initializer);
+			if constexpr (std::is_member_pointer_v<TPtr>)
+			{
+				static PropertyHandler<TClass, T> handler(ptr);
+				static PropertyInitializer initializer = {
+					.Name = name,
+					.Type = TypeInfo::GetTypeInfo<T>(),
+					.Handler = handler
+				};
+				static Property property(typeInfo, initializer);
+			}
+			else
+			{
+				assert(false && "Static member is not supported yet.");
+				static StaticPropertyHandler<TClass, T> handler(ptr);
+				static PropertyInitializer initializer = {
+					.Name = name,
+					.Type = TypeInfo::GetTypeInfo<T>(),
+					.Handler = handler
+				};
+				static Property property(typeInfo, initializer);
+			}
 		}
-		else
-		{
-			assert(false && "Static member is not supported yet.");
-			static StaticPropertyHandler<TClass, T> handler(ptr);
-			static PropertyInitializer initializer = {
-				.Name = name,
-				.Type = TypeInfo::GetTypeInfo<T>(),
-				.Handler = handler
-			};
-			static Property property(typeInfo, initializer);
-		}
-	}
-};
+	};
+}

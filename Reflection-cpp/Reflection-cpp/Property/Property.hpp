@@ -4,50 +4,53 @@
 #include "PropertyHandler.hpp"
 #include "PropertyInitializer.hpp"
 
-class Property
+namespace refl
 {
-public:
-	template <typename T>
-	const T& Get(void* object) const
+	class Property
 	{
-		if (mHandler.GetTypeInfo().IsChildOf<IPropertyHandler<T>>())
+	public:
+		template <typename T>
+		const T& Get(void* object) const
 		{
-			auto concreteHandler = static_cast<const IPropertyHandler<T>*>(&mHandler);
-			return concreteHandler->Get(object);
+			if (mHandler.GetTypeInfo().IsChildOf<IPropertyHandler<T>>())
+			{
+				auto concreteHandler = static_cast<const IPropertyHandler<T>*>(&mHandler);
+				return concreteHandler->Get(object);
+			}
+			else
+			{
+				assert(false && "Invalid casting");
+				return *reinterpret_cast<T*>(nullptr);
+			}
 		}
-		else
+
+		template <typename T>
+		void Set(void* object, const T& value) const
 		{
-			assert(false && "Invalid casting");
-			return *reinterpret_cast<T*>(nullptr);
+			if (mHandler.GetTypeInfo().IsChildOf<IPropertyHandler<T>>())
+			{
+				auto concreteHandler = static_cast<const IPropertyHandler<T>*>(&mHandler);
+				concreteHandler->Set(object, value);
+			}
+			else
+			{
+				assert(false && "Invalid casting");
+			}
 		}
-	}
 
-	template <typename T>
-	void Set(void* object, const T& value) const
-	{
-		if (mHandler.GetTypeInfo().IsChildOf<IPropertyHandler<T>>())
+		Property(TypeInfo& ownerTypeInfo, const PropertyInitializer& initializer)
+			: mName(initializer.Name)
+			, mTypeInfo(ownerTypeInfo)
+			, mHandler(initializer.Handler)
 		{
-			auto concreteHandler = static_cast<const IPropertyHandler<T>*>(&mHandler);
-			concreteHandler->Set(object, value);
+			ownerTypeInfo.AddProperty(mName, this);
 		}
-		else
-		{
-			assert(false && "Invalid casting");
-		}
-	}
 
-	Property(TypeInfo& ownerTypeInfo, const PropertyInitializer& initializer)
-		: mName(initializer.Name)
-		, mTypeInfo(ownerTypeInfo)
-		, mHandler(initializer.Handler)
-	{
-		ownerTypeInfo.AddProperty(mName, this);
-	}
+		const char* GetName() const { return mName; }
 
-	const char* GetName() const { return mName; }
-
-private:
-	const char* mName;
-	const TypeInfo& mTypeInfo;
-	const PropertyHandlerBase& mHandler;
-};
+	private:
+		const char* mName;
+		const TypeInfo& mTypeInfo;
+		const PropertyHandlerBase& mHandler;
+	};
+}
