@@ -141,14 +141,14 @@
   <ItemGroup>
     <ClInclude Include="Reflection-cpp\Factory.h" />
     <ClInclude Include="Reflection-cpp\Macro.h" />
-    <ClInclude Include="Reflection-cpp\Property.hpp" />
-    <ClInclude Include="Reflection-cpp\PropertyHandler.hpp" />
-    <ClInclude Include="Reflection-cpp\PropertyInitializer.hpp" />
-    <ClInclude Include="Reflection-cpp\PropertyRegister.hpp" />
+    <ClInclude Include="Reflection-cpp\Property\Property.hpp" />
+    <ClInclude Include="Reflection-cpp\Property\PropertyHandler.hpp" />
+    <ClInclude Include="Reflection-cpp\Property\PropertyInitializer.hpp" />
+    <ClInclude Include="Reflection-cpp\Property\PropertyRegister.hpp" />
     <ClInclude Include="Reflection-cpp\Reflection.h" />
-    <ClInclude Include="Reflection-cpp\SuperClassDeduction.hpp" />
-    <ClInclude Include="Reflection-cpp\TypeInfo.hpp" />
-    <ClInclude Include="Reflection-cpp\TypeInfoInitializer.hpp" />
+    <ClInclude Include="Reflection-cpp\TypeInfo\SuperClassDeduction.hpp" />
+    <ClInclude Include="Reflection-cpp\TypeInfo\TypeInfo.hpp" />
+    <ClInclude Include="Reflection-cpp\TypeInfo\TypeInfoInitializer.hpp" />
     <ClInclude Include="Sample\Sample.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

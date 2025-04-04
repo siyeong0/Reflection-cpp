@@ -6,7 +6,7 @@
 
 class Foo
 {
-	MAKE_TYPE_INFO(Foo);
+	MAKE_DYNAMIC_TYPE_INFO(Foo);
 public:
 	MEMBER(int, mData1);
 	MEMBER(int, mData2);
@@ -16,7 +16,7 @@ public:
 
 class Dumb : public Foo
 {
-	MAKE_TYPE_INFO(Dumb);
+	MAKE_DYNAMIC_TYPE_INFO(Dumb);
 public:
 	MEMBER(float, mValue);
 

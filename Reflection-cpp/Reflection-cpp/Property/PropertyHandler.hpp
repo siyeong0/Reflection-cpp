@@ -1,10 +1,10 @@
 #pragma once
-#include "Macro.h"
-#include "TypeInfo.hpp"
+#include "../Macro.h"
+#include "../TypeInfo/TypeInfo.hpp"
 
 class PropertyHandlerBase
 {
-	MAKE_TYPE_INFO(PropertyHandlerBase);
+	MAKE_DYNAMIC_TYPE_INFO(PropertyHandlerBase);
 public:
 	virtual ~PropertyHandlerBase() = default;
 };
@@ -12,7 +12,7 @@ public:
 template <typename T>
 class IPropertyHandler : public PropertyHandlerBase
 {
-	MAKE_TYPE_INFO(IPropertyHandler);
+	MAKE_DYNAMIC_TYPE_INFO(IPropertyHandler);
 public:
 	virtual T& Get(void* object) const = 0;
 	virtual void Set(void* object, const T& value) const = 0;
@@ -21,7 +21,7 @@ public:
 template <typename TClass, typename T>
 class PropertyHandler : public IPropertyHandler<T>
 {
-	MAKE_TYPE_INFO(PropertyHandler);
+	MAKE_DYNAMIC_TYPE_INFO(PropertyHandler);
 	using MemberPtrType = T TClass::*;
 public:
 	virtual T& Get(void* object) const override
@@ -46,7 +46,7 @@ private:
 template <typename TClass, typename T>
 class StaticPropertyHandler : public IPropertyHandler<T>
 {
-	MAKE_TYPE_INFO(StaticPropertyHandler);
+	MAKE_DYNAMIC_TYPE_INFO(StaticPropertyHandler);
 public:
 	virtual T& Get(void* object) const override
 	{

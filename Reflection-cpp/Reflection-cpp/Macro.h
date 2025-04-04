@@ -2,14 +2,20 @@
 
 // TpyeInfo를 생성하는 매크로
 // 클래스 정의에 "MAKE_TYPE_INFO( CLASSNAME )" 추가
-// TypeInfo가 추가된 클래스는 virtual function table이 생성됨; 인스턴스마다 8byte( sizeof(void*) ) 추가
 #define MAKE_TYPE_INFO(CLASS)	\
+public:	\
+	using Super = typename SuperClassTypeDeduction<CLASS>::Type;	\
+	using ThisType = CLASS;	\
+public:	
+
+// virtual function table이 생성됨; 인스턴스마다 8byte( sizeof(void*) ) 추가
+#define MAKE_DYNAMIC_TYPE_INFO(CLASS)	\
 public:	\
 	using Super = typename SuperClassTypeDeduction<CLASS>::Type;	\
 	using ThisType = CLASS;	\
 public:	\
 	virtual const TypeInfo& GetTypeInfo() const { return TypeInfo::GetTypeInfo<ThisType>(); }	\
-private:	\
+private:	
 // ptr->GetTypeInfo()로 타입 정보를 얻어올 수 있음
 
 

@@ -1,14 +1,14 @@
 #pragma once
 #include "Factory.h"
 
-#include "SuperClassDeduction.hpp"
-#include "TypeInfo.hpp"
-#include "TypeInfoInitializer.hpp"
+#include "TypeInfo/SuperClassDeduction.hpp"
+#include "TypeInfo/TypeInfo.hpp"
+#include "TypeInfo/TypeInfoInitializer.hpp"
 
-#include "Property.hpp"
-#include "PropertyHandler.hpp"
-#include "PropertyInitializer.hpp"
-#include "PropertyRegister.hpp"
+#include "Property/Property.hpp"
+#include "Property/PropertyHandler.hpp"
+#include "Property/PropertyInitializer.hpp"
+#include "Property/PropertyRegister.hpp"
 
 #include "Macro.h"
 

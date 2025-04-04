@@ -11,17 +11,17 @@ class A
 public:
 	virtual ~A() = default;
 
-	MAKE_TYPE_INFO(A)
+	MAKE_DYNAMIC_TYPE_INFO(A);
 };
 
 class B : public A
 {
-	MAKE_TYPE_INFO(B)
+	MAKE_DYNAMIC_TYPE_INFO(B);
 };
 
 class C : public B
 {
-	MAKE_TYPE_INFO(C)
+	MAKE_DYNAMIC_TYPE_INFO(C);
 };
 
 

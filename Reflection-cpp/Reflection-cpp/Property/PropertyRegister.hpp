@@ -1,6 +1,6 @@
 #pragma once
 #include <cassert>
-#include "TypeInfo.hpp"
+#include "../TypeInfo/TypeInfo.hpp"
 #include "Property.hpp"
 #include "PropertyInitializer.hpp"
 
